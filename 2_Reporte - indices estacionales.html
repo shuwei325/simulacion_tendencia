@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Reporte - Indices estacionales</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="2_Reporte - indices estacionales_files/libs/clipboard/clipboard.min.js"></script>
+<script src="2_Reporte - indices estacionales_files/libs/quarto-html/quarto.js"></script>
+<script src="2_Reporte - indices estacionales_files/libs/quarto-html/popper.min.js"></script>
+<script src="2_Reporte - indices estacionales_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="2_Reporte - indices estacionales_files/libs/quarto-html/anchor.min.js"></script>
+<link href="2_Reporte - indices estacionales_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="2_Reporte - indices estacionales_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="2_Reporte - indices estacionales_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="2_Reporte - indices estacionales_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="2_Reporte - indices estacionales_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="2_Reporte - indices estacionales_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="2_Reporte - indices estacionales_files/libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="1">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#paso-1" id="toc-paso-1" class="nav-link active" data-scroll-target="#paso-1"><span class="header-section-number">1</span> Paso 1</a></li>
+  <li><a href="#paso-2" id="toc-paso-2" class="nav-link" data-scroll-target="#paso-2"><span class="header-section-number">2</span> Paso 2</a>
+  <ul class="collapse">
+  <li><a href="#coeficientes-estimados" id="toc-coeficientes-estimados" class="nav-link" data-scroll-target="#coeficientes-estimados"><span class="header-section-number">2.1</span> Coeficientes estimados</a>
+  <ul class="collapse">
+  <li><a href="#estacion-1" id="toc-estacion-1" class="nav-link" data-scroll-target="#estacion-1"><span class="header-section-number">2.1.1</span> Estacion 1</a></li>
+  <li><a href="#estacion-2" id="toc-estacion-2" class="nav-link" data-scroll-target="#estacion-2"><span class="header-section-number">2.1.2</span> Estacion 2</a></li>
+  <li><a href="#estacion-3" id="toc-estacion-3" class="nav-link" data-scroll-target="#estacion-3"><span class="header-section-number">2.1.3</span> Estacion 3</a></li>
+  <li><a href="#estacion-4" id="toc-estacion-4" class="nav-link" data-scroll-target="#estacion-4"><span class="header-section-number">2.1.4</span> Estacion 4</a></li>
+  </ul></li>
+  <li><a href="#gráficos-de-errores" id="toc-gráficos-de-errores" class="nav-link" data-scroll-target="#gráficos-de-errores"><span class="header-section-number">2.2</span> Gráficos de errores</a>
+  <ul class="collapse">
+  <li><a href="#estacion-1-1" id="toc-estacion-1-1" class="nav-link" data-scroll-target="#estacion-1-1"><span class="header-section-number">2.2.1</span> Estacion 1</a></li>
+  <li><a href="#estacion-2-1" id="toc-estacion-2-1" class="nav-link" data-scroll-target="#estacion-2-1"><span class="header-section-number">2.2.2</span> Estacion 2</a></li>
+  <li><a href="#estacion-3-1" id="toc-estacion-3-1" class="nav-link" data-scroll-target="#estacion-3-1"><span class="header-section-number">2.2.3</span> Estacion 3</a></li>
+  <li><a href="#estacion-4-1" id="toc-estacion-4-1" class="nav-link" data-scroll-target="#estacion-4-1"><span class="header-section-number">2.2.4</span> Estacion 4</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#paso-3." id="toc-paso-3." class="nav-link" data-scroll-target="#paso-3."><span class="header-section-number">3</span> Paso 3.</a></li>
+  <li><a href="#paso-4." id="toc-paso-4." class="nav-link" data-scroll-target="#paso-4."><span class="header-section-number">4</span> Paso 4.</a>
+  <ul class="collapse">
+  <li><a href="#histogramas-de-las-betas-de-tendencia" id="toc-histogramas-de-las-betas-de-tendencia" class="nav-link" data-scroll-target="#histogramas-de-las-betas-de-tendencia"><span class="header-section-number">4.1</span> Histogramas de las betas de tendencia</a>
+  <ul class="collapse">
+  <li><a href="#estacion-1-2" id="toc-estacion-1-2" class="nav-link" data-scroll-target="#estacion-1-2"><span class="header-section-number">4.1.1</span> Estacion 1</a></li>
+  <li><a href="#estacion-2-2" id="toc-estacion-2-2" class="nav-link" data-scroll-target="#estacion-2-2"><span class="header-section-number">4.1.2</span> Estacion 2</a></li>
+  <li><a href="#estacion-3-2" id="toc-estacion-3-2" class="nav-link" data-scroll-target="#estacion-3-2"><span class="header-section-number">4.1.3</span> Estacion 3</a></li>
+  <li><a href="#estacion-4-2" id="toc-estacion-4-2" class="nav-link" data-scroll-target="#estacion-4-2"><span class="header-section-number">4.1.4</span> Estacion 4</a></li>
+  </ul></li>
+  <li><a href="#percentiles-2.5-mediana-y-97.5-de-las-betas-de-tendencia" id="toc-percentiles-2.5-mediana-y-97.5-de-las-betas-de-tendencia" class="nav-link" data-scroll-target="#percentiles-2.5-mediana-y-97.5-de-las-betas-de-tendencia"><span class="header-section-number">4.2</span> percentiles 2.5, mediana y 97.5 de las betas de tendencia</a>
+  <ul class="collapse">
+  <li><a href="#estacion-1-3" id="toc-estacion-1-3" class="nav-link" data-scroll-target="#estacion-1-3"><span class="header-section-number">4.2.1</span> Estacion 1</a></li>
+  <li><a href="#estacion-2-3" id="toc-estacion-2-3" class="nav-link" data-scroll-target="#estacion-2-3"><span class="header-section-number">4.2.2</span> Estacion 2</a></li>
+  <li><a href="#estacion-3-3" id="toc-estacion-3-3" class="nav-link" data-scroll-target="#estacion-3-3"><span class="header-section-number">4.2.3</span> Estacion 3</a></li>
+  <li><a href="#estacion-4-3" id="toc-estacion-4-3" class="nav-link" data-scroll-target="#estacion-4-3"><span class="header-section-number">4.2.4</span> Estacion 4</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Reporte - Indices estacionales</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="paso-1" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Paso 1</h1>
+<p>Para cada cluster <span class="math inline">\(i=1,...,5\)</span>, ajustar una regresión lineal para cada índice 1:4 como variable dependiente contra las 5 covariables observadas históricas (ft, amv, cllj, nino, pdo) que varia por estación. Estas covariables se filtran por estación y años 1984-2016 para ajustar el mismo período que los índices climáticos. Explícitamente: Para <span class="math inline">\(i=1,…5,~~j=1,...,25\)</span>,</p>
+<p><span class="math display">\[indice_{ij} = \beta_0 + \beta_1~~ft + \beta_2~~amv + \beta_3~~cllj + \beta_4~~nino + \beta_5~~pdo + \epsilon_{ij}\]</span> <strong>Notación:</strong> B= Belize, C=Caribbean, H=Honduras, NP= North Pacific, SP=South Pacific.</p>
+</section>
+<section id="paso-2" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Paso 2</h1>
+<p>Verificar los supuestos de cada regresión y obtención de los coeficientes estimados de betas.</p>
+<section id="coeficientes-estimados" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="coeficientes-estimados"><span class="header-section-number">2.1</span> Coeficientes estimados</h2>
+<section id="estacion-1" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="estacion-1"><span class="header-section-number">2.1.1</span> Estacion 1</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   intercept   Ft.lp  amv.lp    cllj    nino pdo.orth
+B    -1.7559  4.5907 -7.3049 -0.2875 -0.0337   0.1685
+C    -1.6883  3.5647 -6.6517  0.1448  0.0968   0.0342
+H    -0.5828  1.3222 -2.6097  0.0121 -0.0429   0.0398
+NP   -2.0839  4.8433 -8.4884 -0.0336  0.0889   0.1310
+SP    1.9511 -5.0087  7.4616  0.3137  0.1929  -0.0849</code></pre>
+</div>
+</div>
+</section>
+<section id="estacion-2" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="estacion-2"><span class="header-section-number">2.1.2</span> Estacion 2</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   intercept   Ft.lp  amv.lp    cllj   nino pdo.orth
+B    -1.9877  4.1953 -2.9903 -0.2195 0.3354   0.2189
+C     1.7635 -3.8351  5.5509  0.1795 0.5611   0.1225
+H    -0.3994  0.8298  0.2048  0.0769 0.4464   0.0651
+NP    0.9989 -2.1408  3.3012  0.2141 0.6406   0.1655
+SP    1.5053 -3.5181  7.9308 -0.0202 0.1842   0.0386</code></pre>
+</div>
+</div>
+</section>
+<section id="estacion-3" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="estacion-3"><span class="header-section-number">2.1.3</span> Estacion 3</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   intercept  Ft.lp  amv.lp    cllj    nino pdo.orth
+B    -0.8939 1.5531 -2.9416  0.0854  0.0282  -0.2103
+C     0.0513 0.7706 -5.7490 -0.1692 -0.0771  -0.1987
+H    -0.4367 1.1166 -3.3009 -0.0596 -0.1154  -0.3313
+NP   -0.5678 1.7473 -6.0428 -0.1006 -0.0096  -0.2523
+SP    0.2920 0.0149 -1.9998 -0.2027  0.2977  -0.4259</code></pre>
+</div>
+</div>
+</section>
+<section id="estacion-4" class="level3" data-number="2.1.4">
+<h3 data-number="2.1.4" class="anchored" data-anchor-id="estacion-4"><span class="header-section-number">2.1.4</span> Estacion 4</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   intercept   Ft.lp amv.lp    cllj    nino pdo.orth
+B    -0.1956  0.3743 1.0386 -0.0133  0.0968   0.1294
+C     0.3630 -0.8301 2.1540 -0.0180 -0.3254   0.1060
+H     0.7789 -0.4814 2.3096  0.2919 -0.3771  -0.0166
+NP    0.1784 -0.2348 2.3654  0.0509 -0.3354   0.0617
+SP    0.9553 -1.6380 3.7053  0.1616 -0.3238  -0.1897</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="gráficos-de-errores" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="gráficos-de-errores"><span class="header-section-number">2.2</span> Gráficos de errores</h2>
+<section id="estacion-1-1" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="estacion-1-1"><span class="header-section-number">2.2.1</span> Estacion 1</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+</section>
+<section id="estacion-2-1" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="estacion-2-1"><span class="header-section-number">2.2.2</span> Estacion 2</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+</section>
+<section id="estacion-3-1" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="estacion-3-1"><span class="header-section-number">2.2.3</span> Estacion 3</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+</section>
+<section id="estacion-4-1" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="estacion-4-1"><span class="header-section-number">2.2.4</span> Estacion 4</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p><strong>Nota:</strong> Se puede hacer más pruebas estadísticas relacionadas a los errores. Hasta este punto solamente grafiqué los errores para cada índice del cluster.</p>
+</section>
+</section>
+</section>
+<section id="paso-3." class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Paso 3.</h1>
+<p>Simulo los 4 índices para cada cluster, con las 4 covariables sintéticas (amv, cllj, niño, pdo) de 1000 repeticiones cada una, junto con los coeficientes estimados del modelo de regresión desde 1900 a 2022. Nota: Aquí entiendo que no se debe usar la variable ft. Aquí es equivalente suponer el modelo con ft cero. Explícitamente:</p>
+<p><span class="math display">\[indice_{ij} = \hat{\beta}_0 + \hat{\beta}_2~~amv + \hat{\beta}_3~~cllj + \hat{\beta}_4~~nino + \hat{\beta}_5~~pdo + \epsilon_{ij}\]</span></p>
+</section>
+<section id="paso-4." class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Paso 4.</h1>
+<p>Debido a que 1984 a 2016 es un período de 33 años, entonces con las series sintéticas de 1900 a 2022 se calculan todas las tendencias de 33 años, para cada uno de los períodos de: 1900 a 1932 años, 1901 a 1933 años, 1903 a 1934 años, …., 1990:2022. Esto se hace para todas las 1000 simulaciones y se ponen todas estas tendencias. Los intervalos de confianza de todas estas tendencias al 95% de confianza se usan para hacer las barritas rojas del gráfico.</p>
+<section id="histogramas-de-las-betas-de-tendencia" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="histogramas-de-las-betas-de-tendencia"><span class="header-section-number">4.1</span> Histogramas de las betas de tendencia</h2>
+<section id="estacion-1-2" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="estacion-1-2"><span class="header-section-number">4.1.1</span> Estacion 1</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+</section>
+<section id="estacion-2-2" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="estacion-2-2"><span class="header-section-number">4.1.2</span> Estacion 2</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+</section>
+<section id="estacion-3-2" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="estacion-3-2"><span class="header-section-number">4.1.3</span> Estacion 3</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+</section>
+<section id="estacion-4-2" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="estacion-4-2"><span class="header-section-number">4.1.4</span> Estacion 4</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="percentiles-2.5-mediana-y-97.5-de-las-betas-de-tendencia" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="percentiles-2.5-mediana-y-97.5-de-las-betas-de-tendencia"><span class="header-section-number">4.2</span> percentiles 2.5, mediana y 97.5 de las betas de tendencia</h2>
+<section id="estacion-1-3" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="estacion-1-3"><span class="header-section-number">4.2.1</span> Estacion 1</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="1920"></p>
+</div>
+</div>
+</section>
+<section id="estacion-2-3" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="estacion-2-3"><span class="header-section-number">4.2.2</span> Estacion 2</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="1920"></p>
+</div>
+</div>
+</section>
+<section id="estacion-3-3" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="estacion-3-3"><span class="header-section-number">4.2.3</span> Estacion 3</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="1920"></p>
+</div>
+</div>
+</section>
+<section id="estacion-4-3" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="estacion-4-3"><span class="header-section-number">4.2.4</span> Estacion 4</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="2_Reporte---indices-estacionales_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="1920"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
